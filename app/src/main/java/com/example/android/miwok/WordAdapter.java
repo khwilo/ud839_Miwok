@@ -26,7 +26,7 @@ public class WordAdapter extends ArrayAdapter<Word> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item located at this position
-        Word word = getItem(position);
+        Word currentWord = getItem(position);
 
         // Check if existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
@@ -40,13 +40,13 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         // Get the different word translations from the Word object and
         // populate them onto the TextViews.
-        miwokTextView.setText(word.getMiwokTranslation());
-        defaultTextView.setText(word.getDefaultTranslation());
+        miwokTextView.setText(currentWord.getMiwokTranslation());
+        defaultTextView.setText(currentWord.getDefaultTranslation());
 
         // Find the ImageView in the list_item.xml layout file and
         // populate it with an image asset.
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.word_image_view);
-        imageView.setImageResource(word.getImageResource());
+        imageView.setImageResource(currentWord.getImageResource());
 
         // Return the list item layout to be shown on the ListView.
         return listItemView;
