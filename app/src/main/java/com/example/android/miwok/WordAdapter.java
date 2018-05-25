@@ -1,6 +1,7 @@
 package com.example.android.miwok;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
+    private int mColorResourceId;
+
     // The context is used to inflate the layout file while the
     // list is the data we want to display.
-    public WordAdapter(Context context, ArrayList<Word> words) {
+    public WordAdapter(Context context, ArrayList<Word> words, int colorResourceId) {
         // In this adapter the second argument is not used because a
         // separate file is defined for a custom view to be displayed instead of the default
         // one (...one TextView).
         super(context, 0, words);
+        mColorResourceId = colorResourceId;
     }
 
     // The position - the position in the list of data to be displayed.
@@ -52,6 +56,13 @@ public class WordAdapter extends ArrayAdapter<Word> {
         } else {
             imageView.setVisibility(View.GONE);
         }
+
+        // Find the view for the list item containing the texts
+        View textViewContainer = listItemView.findViewById(R.id.text_container);
+        // Find the color that the resource ID maps to
+        int color = ContextCompat.getColor(getContext(), mColorResourceId);
+        // Set the background color of the text container view
+        textViewContainer.setBackgroundColor(color);
 
         // Return the list item layout to be shown on the ListView.
         return listItemView;
