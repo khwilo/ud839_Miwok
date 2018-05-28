@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class FamilyActivity extends AppCompatActivity {
     private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
         @Override
         public void onCompletion(MediaPlayer mp) {
-            releaseMedia();
+            releaseMediaPlayer();
         }
     };
 
@@ -64,7 +63,7 @@ public class FamilyActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word member = family.get(position);
 
-                releaseMedia();
+                releaseMediaPlayer();
 
                 mMediaPlayer = MediaPlayer.create(FamilyActivity.this, member.getAudioResourceId());
                 mMediaPlayer.start();
@@ -77,10 +76,10 @@ public class FamilyActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        releaseMedia();
+        releaseMediaPlayer();
     }
 
-    private void releaseMedia() {
+    private void releaseMediaPlayer() {
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;
