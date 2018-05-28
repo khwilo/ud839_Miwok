@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class WordAdapter extends ArrayAdapter<Word> {
     private int mColorResourceId;
-    MediaPlayer mMediaPlayer;
 
     // The context is used to inflate the layout file while the
     // list is the data we want to display.
@@ -47,15 +46,6 @@ public class WordAdapter extends ArrayAdapter<Word> {
         // Get the different word translations from the Word object and
         // populate them onto the TextViews.
         miwokTextView.setText(currentWord.getMiwokTranslation());
-
-        miwokTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMediaPlayer = MediaPlayer.create(getContext(), currentWord.getAudioResourceId());
-                mMediaPlayer.start();
-            }
-        });
-
         defaultTextView.setText(currentWord.getDefaultTranslation());
 
         // Find the ImageView in the list_item.xml layout file and
