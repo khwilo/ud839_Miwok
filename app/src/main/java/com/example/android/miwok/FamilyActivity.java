@@ -15,20 +15,24 @@
  */
 package com.example.android.miwok;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
+    MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.word_list);
 
-        ArrayList<Word> family = new ArrayList<Word>();
+        final ArrayList<Word> family = new ArrayList<Word>();
 
         family.add(new Word("father", "әpә", R.drawable.family_father, R.raw.family_father));
         family.add(new Word("mother", "әṭa", R.drawable.family_mother, R.raw.family_mother));
@@ -46,5 +50,15 @@ public class FamilyActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.list);
 
         listView.setAdapter(familyAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Word member = family.get(position);
+
+                mMediaPlayer = MediaPlayer.create(FamilyActivity.this, member.getAudioResourceId());
+                mMediaPlayer.start();
+            }
+        });
     }
 }
