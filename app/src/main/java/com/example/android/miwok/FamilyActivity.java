@@ -21,11 +21,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class FamilyActivity extends AppCompatActivity {
     private MediaPlayer mMediaPlayer;
+
+    private MediaPlayer.OnCompletionListener mCompletionListener = new MediaPlayer.OnCompletionListener() {
+        @Override
+        public void onCompletion(MediaPlayer mp) {
+            releaseMedia();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +64,20 @@ public class FamilyActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Word member = family.get(position);
 
+                releaseMedia();
+
                 mMediaPlayer = MediaPlayer.create(FamilyActivity.this, member.getAudioResourceId());
                 mMediaPlayer.start();
+
+                mMediaPlayer.setOnCompletionListener(mCompletionListener);
             }
         });
+    }
+
+    private void releaseMedia() {
+        if (mMediaPlayer != null) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
     }
 }
